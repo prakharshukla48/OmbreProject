@@ -18,5 +18,5 @@ from bs4 import BeautifulSoup
 r = requests.get(url)
 soup = BeautifulSoup(content,'Html.parser')
 ```
-##License
-[MIT](https://choosealicense.com/licenses/mit/)
+## License
+>[MIT](https://choosealicense.com/licenses/mit/)
