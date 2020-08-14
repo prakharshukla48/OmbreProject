@@ -2,7 +2,6 @@ import requests
 import csv
 from bs4 import BeautifulSoup
 import time
-import urllib
 import re 
 lists = []
 lists2 = []
@@ -41,9 +40,9 @@ soupr = BeautifulSoup(rart.content,'html.parser')
 artname = soupr.find('div',attrs = {'class':'_2tYMEzR8cMuGARygsRnsC_'})
 artname = artname.h1.string
 lists.append(artname)
-start_time = soup.find_all('div', attrs={'class':"_3kXAsJ0DPskjq42LFJzTpg"})
-
-#yet to be solved
+#start time of the event(maybe encrypted in javascript)
+start_time = soup.find_all('div',attrs = {'class':'_3kXAsJ0DPskjq42LFJzTpg'},limit =1)
+lists.appebnd(start_time)
 
 # genres of the artist 
 genres = soupr.find('div',attrs={'class':'_2jwlhF_qo6XQLXdKdqXzMx'})
@@ -62,6 +61,10 @@ for link in poster:
 #link of live stream  
 stream = soupr.find_all('a',attrs = {'class':'_6PQxOPPUFGit_6KHJb0bW'},limit = 1)    
 for link in stream:
+    lists.append(link.get('href'))
+#stream link
+ellie = soup.find_all("a",text = re.compile('ellie'),limit=1)
+for link in ellie:
     lists.append(link.get('href'))
 #link of the page of all popular livestream 
 #we will need to create a new request here
@@ -86,4 +89,6 @@ with open ('main.csv','w') as file:
    writer=csv.writer(file)
    for row in lists:
       writer.writerow(row)
+   for row2 in lists2:
+       writer.writerow(row2)
 
